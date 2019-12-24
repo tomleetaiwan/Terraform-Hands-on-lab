@@ -1,0 +1,7 @@
+## Ignore some files
+
+# User-specific files
+*.tfstate
+*.tfstate.backup
+# Provider Files
+.terraform/
