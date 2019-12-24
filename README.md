@@ -46,7 +46,7 @@ ARM_ENVIRONMENT = public
 
 ## Lab 2 首次使用 Terraform
 
-* 目標 : 建立一個資源群組內包含三個 Azure Storage 帳號，建立在東亞機房。其 HCL 檔案名稱為 main.tf，使用 HCL v0.12 語法版本，亦可至 Repo [下載原始程式碼](https://dev.azure.com/tomleedemo/_git/TerraformAzure) 參考
+* 目標 : 建立一個資源群組內包含三個 Azure Storage 帳號，建立在東亞機房。其 HCL 檔案名稱為 main.tf，使用 HCL v0.12 語法版本，亦可至 Repo [下載原始程式碼](https://github.com/tomleetaiwan/Terraform-Hands-on-lab/tree/master/Storage) 參考
 
 * 以命令列模式建立一個資料夾，並進入該資料夾
 * 如下鍵入進行初始化，初始化只須執行一次
