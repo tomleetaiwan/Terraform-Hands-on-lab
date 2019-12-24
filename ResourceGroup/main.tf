@@ -15,10 +15,10 @@ resource "azurerm_resource_group" "rg" {
   location = "eastasia"
 }
 
-# 定義要取得之資料
+# 定義要取得之資料，此範例是以一個之前已經建立過的 Azure Virtual Machines 作為示範
 data "azurerm_virtual_machine" "vm" {
-  name                = "TomWin10"
-  resource_group_name = "TomRG"
+  name                = "<您的 Azure Virttual Machine 名稱>"
+  resource_group_name = "<您的 Azure Virtual Machine 所在的 Resource Group 名稱>"
 }
 
 # 取得 Azure VM : TomWin10 Resource ID
