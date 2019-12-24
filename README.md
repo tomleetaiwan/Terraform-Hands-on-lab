@@ -1,4 +1,4 @@
-# 在 Microsoft Azure 上使用 HashiCorp Terraform 實機操作
+# 在 Microsoft Azure 上使用 [HashiCorp Terraform](https://www.terraform.io/docs/cli-index.html) 實機操作
 
 ## Terraform 與 Microsoft Azure 相關資源
 * [Terraform on Microsoft Azure 首頁](https://docs.microsoft.com/zh-tw/azure/terraform/)
