@@ -121,3 +121,10 @@ terraform apply -var-file="variables.tfvars"
 terraform destroy
 ```
 * 成功後以 [Azure Management Portal](https://portal.azure.com/) 確認是否全部清除
+
+## 其他範例
+
+* [Storage](https://github.com/tomleetaiwan/Terraform-Hands-on-lab/tree/master/Storage) : 本次 Hands-on lab 內容，建立三個 Azure Storage 帳號，展示 Terraform 基本功能
+* [Resource Group](https://github.com/tomleetaiwan/Terraform-Hands-on-lab/tree/master/ResourceGroup) : 建立兩個 Azure Resource Group 示範 Terraform output 與 Data 功能
+* [AppService](https://github.com/tomleetaiwan/Terraform-Hands-on-lab/tree/master/AppService) : 建立 Azure App Service Web App Free Tier 與 Azure SQL Database Basic
+* [AppServiceModule](https://github.com/tomleetaiwan/Terraform-Hands-on-lab/tree/master/AppServiceModule) : 建立 Azure App Service Web App Free Tier 與 Azure SQL Database Basic 但將資料庫建立部分拆成獨立模組
