@@ -5,3 +5,4 @@
 *.tfstate.backup
 # Provider Files
 .terraform/
+LinuxVM/.terraform.tfstate.lock.info

@@ -128,3 +128,4 @@ terraform destroy
 * [Resource Group](https://github.com/tomleetaiwan/Terraform-Hands-on-lab/tree/master/ResourceGroup) : 建立兩個 Azure Resource Group 示範 Terraform output 與 Data 功能
 * [AppService](https://github.com/tomleetaiwan/Terraform-Hands-on-lab/tree/master/AppService) : 建立 Azure App Service Web App Free Tier 與 Azure SQL Database Basic
 * [AppServiceModule](https://github.com/tomleetaiwan/Terraform-Hands-on-lab/tree/master/AppServiceModule) : 建立 Azure App Service Web App Free Tier 與 Azure SQL Database Basic 但將資料庫建立部分拆成獨立模組
+* [LinuxVM](https://github.com/tomleetaiwan/Terraform-Hands-on-lab/tree/master/LinuxVM) : 建立 Linux Azure Virtual Machine 與 Azure VM Extension - Linux Diagnostic Extension (LAD) 3.0
