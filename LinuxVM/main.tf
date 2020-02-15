@@ -7,13 +7,26 @@ provider "azurerm" {
   version = "~> 1.43"
 }
 
-# 建立個 Azure Resource Group
+# 變數宣告
+variable "Username" {
+  default     =  "<<您的登入帳號名稱>>"
+}
+
+variable "Password" {
+  default     =  "<<您的密碼>>"
+}
+
+variable "StorageName" {
+  default     =  "tomlad01"
+}
+
+# 建立 Azure Resource Group
 resource "azurerm_resource_group" "tom-rg" {
   name     = "tomleelinuxvmRG"
   location = "southeastasia"
 }
 
-# 建立 Virtual network
+# 建立 Virtual Network (VNET)
 resource "azurerm_virtual_network" "tom-vnet" {
     name                = "myVnet"
     address_space       = ["10.0.0.0/16"]
@@ -21,7 +34,7 @@ resource "azurerm_virtual_network" "tom-vnet" {
     resource_group_name = azurerm_resource_group.tom-rg.name
 }
 
-# 建立 VNET Subnet
+# 在 VNET 內建立 Subnet
 resource "azurerm_subnet" "tom-subnet" {
     name                 = "mySubnet"
     resource_group_name  = azurerm_resource_group.tom-rg.name
@@ -56,7 +69,7 @@ resource "azurerm_network_security_group" "tom-nsg" {
     }
 }
 
-# 建立 network interface
+# 建立 Network Interface
 resource "azurerm_network_interface" "tom-nic" {
     name                      = "myNIC"
     location                  = azurerm_resource_group.tom-rg.location  
@@ -71,9 +84,9 @@ resource "azurerm_network_interface" "tom-nic" {
     }
 }
 
-# 建立 VM
+# 建立 Azure Virtual Machine 與 Managed Disk
 resource "azurerm_virtual_machine" "tom-vm" {
-  name                  = "tomleevm"
+  name                  = "mylinuxvm"
   location              = azurerm_resource_group.tom-rg.location  
   resource_group_name   = azurerm_resource_group.tom-rg.name
   network_interface_ids = [azurerm_network_interface.tom-nic.id] 
@@ -87,7 +100,7 @@ resource "azurerm_virtual_machine" "tom-vm" {
   }
 
   storage_os_disk {
-    name              = "myosdisk1"
+    name              = "myOsDisk"
     caching           = "ReadWrite"
     create_option     = "FromImage"
     managed_disk_type = "Standard_LRS"
@@ -95,8 +108,8 @@ resource "azurerm_virtual_machine" "tom-vm" {
 
   os_profile {
     computer_name  = "hostname"
-    admin_username = "<<< 設定登入帳號>>>"
-    admin_password = "<<< 設定密碼>>>"
+    admin_username = var.Username
+    admin_password = var.Password
   }
 
   os_profile_linux_config {
@@ -105,9 +118,9 @@ resource "azurerm_virtual_machine" "tom-vm" {
 
 }
 
-# 建立 Azure Storage Account
+# 建立 Azure Storage Account 以儲存 Linux Diagnostic Extension (LAD) 送出之資料
 resource "azurerm_storage_account" "tom-storage" {
-  name                      = "<<< 設定 Azure Storage 名稱 >>>"
+  name                      = var.StorageName
   resource_group_name       = azurerm_resource_group.tom-rg.name
   location                  = azurerm_resource_group.tom-rg.location
   account_replication_type  = "LRS"
@@ -115,7 +128,7 @@ resource "azurerm_storage_account" "tom-storage" {
 }
 
 
-# 產生 Azure Storage SAS Token
+# 產生具備寫入 Azure Storage 權限之 SAS Token，期效為 2020/1/1-2120/1/1
 data "azurerm_storage_account_sas" "diagnostics" {
   connection_string = azurerm_storage_account.tom-storage.primary_connection_string
   https_only        = true
@@ -148,7 +161,7 @@ data "azurerm_storage_account_sas" "diagnostics" {
   }
 }
 
-# 定義給 Azure VM Extensio 使用的組態設定 Data
+# 定義給 Azure VM Extension - Linux Diagnostic Extension (LAD) 3.0 使用的組態設定之樣板
 data "template_file" "vm-example-ladcfg" {
   template = file("custom_data/ladcfg.json.tpl")
   vars = {
@@ -157,17 +170,16 @@ data "template_file" "vm-example-ladcfg" {
   }
 }
 
-# 定義給 LAD 3.0 一定要使用 SAS Token
+# 定義儲存 LAD 3.0 時之存取權限，一定要使用 SAS Token，SAS 格式中不能包含第一個字元 "?"
 data "template_file" "vm-example-lad-protected-cfg" {
   template = file("custom_data/lad_protected_settings.json.tpl")
   vars = {
     DIAGNOSTIC_STORAGE_ACCOUNT = azurerm_storage_account.tom-storage.name
-    DIAGNOSTIC_STORAGE_SAS = "${substr(data.azurerm_storage_account_sas.diagnostics.sas,1,-1)}"
+    DIAGNOSTIC_STORAGE_SAS = substr(data.azurerm_storage_account_sas.diagnostics.sas,1,-1)
   }
 }
 
-# 建立 Azure VM Extension - Linux Diagnostic Extension (LAD)
-
+# 建立 Azure VM Extension - Linux Diagnostic Extension (LAD) 3.0
 resource "azurerm_virtual_machine_extension" "tom-vm-lad" {
   name                 = "tom-vmlad"
   virtual_machine_id   = azurerm_virtual_machine.tom-vm.id
