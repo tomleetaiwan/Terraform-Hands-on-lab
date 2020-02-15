@@ -3,6 +3,7 @@
 # User-specific files
 *.tfstate
 *.tfstate.backup
+*.terraform.tfstate.lock.info
 # Provider Files
 .terraform/
-LinuxVM/.terraform.tfstate.lock.info
+
