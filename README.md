@@ -33,7 +33,7 @@ az account set --subscription="<訂閱帳號 ID>"
 ```bash
 az ad sp create-for-rbac --role="Contributor" --scopes="/subscriptions/<訂閱帳號 ID>"
 ```
-5. 紀錄回傳的 <appId>  (又稱 Client ID) 與 <password> (又稱 Client Secret) ，請注意僅會顯示一次，請務必記錄下來
+5. 紀錄回傳的 \<appId>  (又稱 Client ID) 與 \<password> (又稱 Client Secret) ，請注意僅會顯示一次，請務必記錄下來
 
 6. 將相關記錄下來值設定至環境變數
 ```bash
