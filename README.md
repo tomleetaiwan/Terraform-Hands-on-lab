@@ -16,7 +16,7 @@ Terraform 可透過四種方式連接 Microsoft Azure :
 * [Authenticating to Azure using a Service Principal and a Client Certificate](https://www.terraform.io/docs/providers/azurerm/guides/service_principal_client_certificate.html)
 * [Authenticating to Azure using a Service Principal and a Client Secret](https://www.terraform.io/docs/providers/azurerm/guides/service_principal_client_secret.html)
 
-* 本次使用以 Service Principal 搭配 Client Secret 方式設定，步驟如下:
+本次使用以 Service Principal 搭配 Client Secret 方式設定，步驟如下:
 1. 列出所有 Azure 訂閱帳號
 ```bash
 az account list --query "[].{name:name, subscriptionId:id, tenantId:tenantId}"
@@ -46,7 +46,11 @@ ARM_ENVIRONMENT = public
 
 ## Lab 2 首次使用 Terraform
 
-* 目標 : 建立一個資源群組內包含三個 Azure Storage 帳號，建立在東亞機房。其 HCL 檔案名稱為 main.tf，使用 HCL v0.12 語法版本，亦可至 Repo [下載原始程式碼](https://github.com/tomleetaiwan/Terraform-Hands-on-lab/tree/master/Storage) 參考
+* 目標 : 建立一個資源群組內包含三個 Azure Storage 帳號，建立在東亞機房。其 HCL 檔案名稱為 main.tf，使用 HCL v0.12 語法版本，亦可至 Repo [下載原始程式碼](https://github.com/tomleetaiwan/Terraform-Hands-on-lab/tree/master/Storage) 參考。由於東亞機房可用機器數量較少，某些免費試用訂閱帳號可能無法順利建立雲端資源，若遇到此種狀況，您可以運用以下 Azure CLI 指令，列出所有 Azure 資料中心名稱，挑選其他資料中心取代預設的 "eastasia"
+```bash
+az account list-locations -o table
+``` 
+
 
 * 以命令列模式建立一個資料夾，並進入該資料夾
 * 如下鍵入進行初始化，初始化只須執行一次
@@ -129,3 +133,4 @@ terraform destroy
 * [AppService](https://github.com/tomleetaiwan/Terraform-Hands-on-lab/tree/master/AppService) : 建立 Azure App Service Web App Free Tier 與 Azure SQL Database Basic
 * [AppServiceModule](https://github.com/tomleetaiwan/Terraform-Hands-on-lab/tree/master/AppServiceModule) : 建立 Azure App Service Web App Free Tier 與 Azure SQL Database Basic 但將資料庫建立部分拆成獨立模組
 * [LinuxVM](https://github.com/tomleetaiwan/Terraform-Hands-on-lab/tree/master/LinuxVM) : 建立 Linux Azure Virtual Machine 與 Azure VM Extension - Linux Diagnostic Extension (LAD) 3.0，本範例參考了 Rui Carmo 在 https://github.com/rcarmo/terraform-azure-linux-vm 範例
+* [LinuxVM-LB](https://github.com/tomleetaiwan/Terraform-Hands-on-lab/tree/master/LinuxVM-LB) : 建立 Linux Azure Virtual Machine 與 Azure Load Balancer 基本版，本範例是修改來自 https://github.com/terraform-providers/terraform-provider-azurerm/tree/master/examples/virtual-machines/linux/load-balanced 的範例
