@@ -54,11 +54,11 @@ az account list-locations -o table
 
 * 以命令列模式建立一個資料夾，並進入該資料夾
 * 如下鍵入進行初始化，初始化只須執行一次
-```bash 
+```bash
 terraform init 
 ``` 
 * 確認已建立妥 main.tf 檔案，檔案內容如下:
-```bash 
+```terraform
 provider "azurerm" {
 }
 variable "location" {
