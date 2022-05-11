@@ -11,10 +11,10 @@
 
 ## Lab 1 連接至 Microsoft Azure
 Terraform 可透過四種方式連接 Microsoft Azure :
-* [Authenticating to Azure using the Azure CLI](https://www.terraform.io/docs/providers/azurerm/guides/azure_cli.html)
-* [Authenticating to Azure using Managed Identity](https://www.terraform.io/docs/providers/azurerm/guides/managed_service_identity.html)
-* [Authenticating to Azure using a Service Principal and a Client Certificate](https://www.terraform.io/docs/providers/azurerm/guides/service_principal_client_certificate.html)
-* [Authenticating to Azure using a Service Principal and a Client Secret](https://www.terraform.io/docs/providers/azurerm/guides/service_principal_client_secret.html)
+* [Authenticating to Azure using the Azure CLI](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/guides/azure_cli)
+* [Authenticating to Azure using Managed Identity](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/guides/managed_service_identity)
+* [Authenticating to Azure using a Service Principal and a Client Certificate](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/guides/service_principal_client_certificate)
+* [Authenticating to Azure using a Service Principal and a Client Secret](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/guides/service_principal_client_secret)
 
 本次使用以 Service Principal 搭配 Client Secret 方式設定，步驟如下:
 1. 列出所有 Azure 訂閱帳號
