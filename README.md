@@ -165,5 +165,5 @@ terraform destroy
 * [ResourceGroup](https://github.com/tomleetaiwan/Terraform-Hands-on-lab/tree/master/ResourceGroup) : 建立兩個 Azure Resource Group 示範 Terraform output 與 Data 功能
 * [AppService](https://github.com/tomleetaiwan/Terraform-Hands-on-lab/tree/master/AppService) : 建立 Azure App Service Web App Free Tier 與 Azure SQL Database Basic
 * [AppServiceModule](https://github.com/tomleetaiwan/Terraform-Hands-on-lab/tree/master/AppServiceModule) : 建立 Azure App Service Web App Free Tier 與 Azure SQL Database Basic 但將資料庫建立部分拆成獨立模組
-* [LinuxVM](https://github.com/tomleetaiwan/Terraform-Hands-on-lab/tree/master/LinuxVM) : 建立 Linux Azure Virtual Machine 與 Azure VM Extension - Linux Diagnostic Extension (LAD) 3.0，本範例參考了 Rui Carmo 在 https://github.com/rcarmo/terraform-azure-linux-vm 範例
+* [LinuxVM](https://github.com/tomleetaiwan/Terraform-Hands-on-lab/tree/master/LinuxVM) : 建立 Linux Azure Virtual Machine 與 Azure VM Extension - Azure Monitor Agent
 * [LinuxVM-LB](https://github.com/tomleetaiwan/Terraform-Hands-on-lab/tree/master/LinuxVM-LB) : 建立 Linux Azure Virtual Machine 與 Azure Load Balancer 基本版，本範例是修改來自 https://github.com/terraform-providers/terraform-provider-azurerm/tree/master/examples/virtual-machines/linux/load-balanced 的範例
