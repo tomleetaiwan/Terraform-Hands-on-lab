@@ -1,59 +1,64 @@
-# 定義使用 Terraform 版本號碼
+# 指定使用之 Azure Provider 來源與版本號碼
 terraform {
-  required_version = "~> 0.12"
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "=3.0.0"
+    }
+  }
 }
 
-# 定義使用 Azure Resource Provider 並限定版本號碼
+# Microsoft Azure Provider 相關之組態設定
 provider "azurerm" {
-  version = "~> 1.37"
+  features {}
 }
 
 # 定義變數資料中心位置 
 # 使用 az account list-locations -o table 列出可用的資料中心
 
 variable "location" {
-  default = "eastasia"
+  default = "southeastasia"
 }
 
 # 定義變數 Resource Group 名稱 
 variable "resource_group_name" {
-  default = "TomDemoTerraformRG"
+  default = "demo-rg"
 }
 
 # 定義變數 SQL Server 名稱 
 variable "sqlserver_name" {
-  default = "tomdemoterraformdbsvr"
+  default = "demosqlsvr"
 }
 
 # 定義變數 Database 名稱
 variable "database_name" {
-  default = "tomdemoterraformdb"
+  default = "demodb"
 }
 
 # 建立 Azure SQL Database Server
-resource "azurerm_sql_server" "sqlserver" {
+resource "azurerm_mssql_server" "sqlsvr" {
   name                         = var.sqlserver_name
   resource_group_name          = var.resource_group_name
   location                     = var.location
   version                      = "12.0"
   administrator_login          = "tomleedemo"
   administrator_login_password = "4-v3ry-53xxU-p455w0rd"
+  minimum_tls_version          = "1.2"
+  public_network_access_enabled = true  
 }
 
 # 建立 Azure SQL Database Single Database
-resource "azurerm_sql_database" "sqldb" {
-  name                = var.database_name
-  resource_group_name = var.resource_group_name
-  location            = var.location
-  server_name         = azurerm_sql_server.sqlserver.name
-  edition = "Basic"
+resource "azurerm_mssql_database" "sqldb" {
+  name           = var.database_name
+  server_id      = azurerm_mssql_server.sqlsvr.id
+  collation      = "Chinese_Taiwan_Stroke_CI_AS"
+  sku_name       = "Basic" 
 }
 
 # 建立 Azure SQL Database 防火牆允許存取 IP 範圍
-resource "azurerm_sql_firewall_rule" "firewall" {
-  name                = "TomFirewallRule"
-  resource_group_name = var.resource_group_name
-  server_name         = azurerm_sql_server.sqlserver.name
-  start_ip_address    = "1.1.1.1"
-  end_ip_address      = "255.255.255.255"
-}
+resource "azurerm_mssql_firewall_rule" "firewall" {
+  name             = "TomFirewallRule"
+  server_id        = azurerm_mssql_server.sqlsvr.id
+  start_ip_address = "1.1.1.1"
+  end_ip_address   = "255.255.255.255"
+}  

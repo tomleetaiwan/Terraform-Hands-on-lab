@@ -7,10 +7,10 @@
 
 ## Lab 0 準備工作，安裝 Terraform
 * [下載您作業系統版本的 Terraform](https://www.terraform.io/downloads.html) 後將其解壓縮，只有一個單一可執行檔 terraform.exe (Windows) 或 terraform (MacOS,Linux,FreeBSD)
-* 將檔案放置到可以在命令模式搜尋到的路徑 (可由系統環境變數 PATH 設妥)
+* 將檔案放置到可以在命令模式搜尋到的路徑 (可由系統環境變數 PATH 設妥)，本實機操作使用 Terraform v1.8.1 版本。
 
 ## Lab 1 連接至 Microsoft Azure
-Terraform 可透過四種方式連接 Microsoft Azure :
+Terraform 可透過數種方式連接 Microsoft Azure :
 * [Authenticating to Azure using the Azure CLI](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/guides/azure_cli)
 * [Authenticating to Azure using Managed Identity](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/guides/managed_service_identity)
 * [Authenticating to Azure using a Service Principal and a Client Certificate](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/guides/service_principal_client_certificate)
@@ -36,17 +36,39 @@ az ad sp create-for-rbac --role="Contributor" --scopes="/subscriptions/<訂閱�
 5. 紀錄回傳的 \<appId>  (又稱 Client ID) 與 \<password> (又稱 Client Secret) ，請注意僅會顯示一次，請務必記錄下來
 
 6. 將相關記錄下來值設定至環境變數
+
+使用 bash 的方式
 ```bash
 ARM_SUBSCRIPTION_ID = <訂閱帳號 ID>
 ARM_CLIENT_ID = <之前紀錄的 appID>
-ARM_CLIENT_SECRET =  <之前紀錄的 passwprd>
+ARM_CLIENT_SECRET =  <之前紀錄的 password>
 ARM_TENANT_ID = <租戶 ID>
 ARM_ENVIRONMENT = public
 ```
+使用 PowerShell 的方式
+
+```powershell
+$env:ARM_SUBSCRIPTION_ID = "<訂閱帳號 ID>"
+$env:ARM_CLIENT_ID = "<之前紀錄的 appID>"
+$env:ARM_CLIENT_SECRET =  "<之前紀錄的 password>"
+$env:ARM_TENANT_ID = "<租戶 ID>"
+$env:ARM_ENVIRONMENT = "public"
+```
+若要測試一些尚未公開技術預覽之 Microsoft Azure 服務或資料中心時，可以強制忽略目前 Azure Terraform Provider 預設對於參數值的檢查，請將以下環境變數設為 false。
+
+使用 bash 方式
+```bash
+ARM_PROVIDER_ENHANCED_VALIDATION = false
+```
+使用 PowerShell 的方式
+```powershell
+$ENV:ARM_PROVIDER_ENHANCED_VALIDATION = "false"
+```
+
 
 ## Lab 2 首次使用 Terraform
 
-* 目標 : 建立一個資源群組內包含三個 Azure Storage 帳號，建立在東亞機房。其 HCL 檔案名稱為 main.tf，使用 HCL v0.12 語法版本，亦可至 Repo [下載原始程式碼](https://github.com/tomleetaiwan/Terraform-Hands-on-lab/tree/master/Storage) 參考。由於東亞機房可用機器數量較少，某些免費試用訂閱帳號可能無法順利建立雲端資源，若遇到此種狀況，您可以運用以下 Azure CLI 指令，列出所有 Azure 資料中心名稱，挑選其他資料中心取代預設的 "eastasia"
+* 目標 : 建立一個資源群組內包含三個 Azure Storage 帳號，建立在東亞機房。其 HCL 檔案名稱為 main.tf，使用 HCL 語法，亦可至 Repo [下載原始程式碼](https://github.com/tomleetaiwan/Terraform-Hands-on-lab/tree/master/Storage) 參考。由於東亞機房可用機器數量較少，某些免費試用訂閱帳號可能無法順利建立雲端資源，若遇到此種狀況，您可以運用以下 Azure CLI 指令，列出所有 Azure 資料中心名稱，挑選其他資料中心取代預設的 "eastasia"
 ```bash
 az account list-locations -o table
 ``` 
@@ -59,8 +81,19 @@ terraform init
 ``` 
 * 確認已建立妥 main.tf 檔案，檔案內容如下:
 ```terraform
-provider "azurerm" {
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "=3.0.0"
+    }
+  }
 }
+
+provider "azurerm" {
+  features {}
+}
+
 variable "location" {
   default = "eastasia"
 }

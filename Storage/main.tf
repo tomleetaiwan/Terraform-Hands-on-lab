@@ -1,6 +1,16 @@
-# 定義使用 Azure Resource Provider 並限定版本號碼
+# 指定使用之 Azure Provider 來源與版本號碼
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "=3.0.0"
+    }
+  }
+}
+
+# Microsoft Azure Provider 相關之組態設定
 provider "azurerm" {
-  version = "~> 1.37"
+  features {}
 }
 
 # 定義變數 location 來決定資料中心
@@ -34,3 +44,4 @@ resource "azurerm_storage_account" "sa" {
   account_replication_type = "LRS"
   account_tier             = "Standard"
 }
+
