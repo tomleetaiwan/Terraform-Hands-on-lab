@@ -1,4 +1,4 @@
-# 在 Microsoft Azure 上使用 [HashiCorp Terraform](https://www.terraform.io/docs/cli-index.html) 實機操作
+# 在 Microsoft Azure 上使用 [IBM/HashiCorp Terraform](https://www.terraform.io/docs/cli-index.html) 實機操作
 
 ## Terraform 與 Microsoft Azure 相關資源
 * [Terraform on Microsoft Azure 首頁](https://docs.microsoft.com/zh-tw/azure/terraform/)
@@ -150,7 +150,7 @@ location            = "southeastasia"
 ```bash
 terraform apply -var-file="variables.tfvars" 
 ```
-* 若希望 Terraform CLI 執行時自動帶入變數值，可將延伸檔名設定為.auto.tfvars，可減少附加 -var-file 參數內容。
+* 若希望 Terraform CLI 執行時自動帶入變數值，可將延伸檔名設定為 .auto.tfvars，可減少附加 -var-file 參數內容。
 
 * 成功後以 [Azure Management Portal](https://portal.azure.com/) 確認是否如實產生。variables.tfvars 與 variables.tf 兩者之間有何差異?  variables.tf 可議定義變數，而是否設定變數值可由撰寫的工程師決定。而 variables.tfvars 則是專門用於設定變數值，無法定義新的變數於其內。
 
