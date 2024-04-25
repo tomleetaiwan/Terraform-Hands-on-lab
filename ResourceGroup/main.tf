@@ -26,6 +26,7 @@ resource "azurerm_resource_group" "rg" {
 }
 
 # 定義要取得之資料，此範例是以一個之前已經建立過的 Azure Virtual Machines，利用 Terraform 取得 Resource ID 的示範
+# 此用法將可用於搭配現有環境已經建立之各類雲端資源；來進行新的雲端資源建置與組態配置
 data "azurerm_virtual_machine" "vm" {
   name                = "<您的 Azure Virttual Machine 名稱>"
   resource_group_name = "<您的 Azure Virtual Machine 所在的 Resource Group 名稱>"

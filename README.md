@@ -37,7 +37,7 @@ az ad sp create-for-rbac --role="Contributor" --scopes="/subscriptions/<訂閱�
 
 6. 將相關記錄下來值設定至環境變數
 
-使用 bash 的方式
+* 使用 bash 的方式
 ```bash
 ARM_SUBSCRIPTION_ID = <訂閱帳號 ID>
 ARM_CLIENT_ID = <之前紀錄的 appID>
@@ -45,7 +45,7 @@ ARM_CLIENT_SECRET =  <之前紀錄的 password>
 ARM_TENANT_ID = <租戶 ID>
 ARM_ENVIRONMENT = public
 ```
-使用 PowerShell 的方式
+* 使用 PowerShell 的方式
 
 ```powershell
 $env:ARM_SUBSCRIPTION_ID = "<訂閱帳號 ID>"
@@ -56,11 +56,11 @@ $env:ARM_ENVIRONMENT = "public"
 ```
 若要測試一些尚未公開技術預覽之 Microsoft Azure 服務或資料中心時，可以強制忽略目前 Azure Terraform Provider 預設對於參數值的檢查，請將以下環境變數設為 false。
 
-使用 bash 方式
+* 使用 bash 方式
 ```bash
 ARM_PROVIDER_ENHANCED_VALIDATION = false
 ```
-使用 PowerShell 的方式
+* 使用 PowerShell 的方式
 ```powershell
 $ENV:ARM_PROVIDER_ENHANCED_VALIDATION = "false"
 ```
@@ -135,7 +135,7 @@ terraform apply
 * 成功後以 [Azure Management Portal](https://portal.azure.com/) 確認是否如實產生
 
 ## Lab 3 使用變數檔
-* 目標 : 將變數設定從 main.tf 移出，單獨放在一個名為 variables.tfvars 的檔案中，並由變數檔設定將資料中心改為東南亞機房
+* 目標 : 將變數設定從 main.tf 移出，單獨放在一個名為 variables.tfvars 的檔案中，並由變數檔設定將資料中心改為東南亞機房，
 * 以命令列模式進入到 main.tf 所在資料夾
 * 確認已建立妥 variables.tfvars 檔案內容如下:
 ```bash
@@ -150,7 +150,9 @@ location            = "southeastasia"
 ```bash
 terraform apply -var-file="variables.tfvars" 
 ```
-* 成功後以 [Azure Management Portal](https://portal.azure.com/) 確認是否如實產生
+* 若希望 Terraform CLI 執行時自動帶入變數值，可將延伸檔名設定為.auto.tfvars，可減少附加 -var-file 參數內容。
+
+* 成功後以 [Azure Management Portal](https://portal.azure.com/) 確認是否如實產生。variables.tfvars 與 variables.tf 兩者之間有何差異?  variables.tf 可議定義變數，而是否設定變數值可由撰寫的工程師決定。而 variables.tfvars 則是專門用於設定變數值，無法定義新的變數於其內。
 
 ## Lab 4 清除與恢復環境
 * 如下鍵入刪除在 Azure 訂閱帳號在本 Lab 所建立的所有內容
@@ -165,5 +167,5 @@ terraform destroy
 * [ResourceGroup](https://github.com/tomleetaiwan/Terraform-Hands-on-lab/tree/master/ResourceGroup) : 建立兩個 Azure Resource Group 示範 Terraform output 與 Data 功能
 * [AppService](https://github.com/tomleetaiwan/Terraform-Hands-on-lab/tree/master/AppService) : 建立 Azure App Service Web App Free Tier 與 Azure SQL Database Basic
 * [AppServiceModule](https://github.com/tomleetaiwan/Terraform-Hands-on-lab/tree/master/AppServiceModule) : 建立 Azure App Service Web App Free Tier 與 Azure SQL Database Basic 但將資料庫建立部分拆成獨立模組
-* [LinuxVM](https://github.com/tomleetaiwan/Terraform-Hands-on-lab/tree/master/LinuxVM) : 建立 Linux Azure Virtual Machine 與 Azure VM Extension - Azure Monitor Agent
-* [LinuxVM-LB](https://github.com/tomleetaiwan/Terraform-Hands-on-lab/tree/master/LinuxVM-LB) : 建立 Linux Azure Virtual Machine 與 Azure Load Balancer 基本版，本範例是修改來自 https://github.com/terraform-providers/terraform-provider-azurerm/tree/master/examples/virtual-machines/linux/load-balanced 的範例
+* [LinuxVM](https://github.com/tomleetaiwan/Terraform-Hands-on-lab/tree/master/LinuxVM) : 建立 Linux Azure Virtual Machine 與 Azure VM Extension - Azure Monitor Agent 的最簡範例
+* [LinuxVM-LB](https://github.com/tomleetaiwan/Terraform-Hands-on-lab/tree/master/LinuxVM-LB) : 建立 Linux Azure Virtual Machine 與 Azure Load Balancer 基本版，本範例是修改來自 https://github.com/terraform-providers/terraform-provider-azurerm/tree/master/examples/virtual-machines/linux/load-balanced 的範例，並使用 variables.tf 來定義與設定變數值
